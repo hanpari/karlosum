@@ -7,9 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 
+#nullable enable
 namespace Karlosum
 {
-#nullable enable
+
+    public static class Extensions
+    {
+        public static string ToHexadecimalString(this byte[] bytes)
+        {
+            var sb = new StringBuilder();
+            foreach (var b in bytes)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+            return sb.ToString();
+        }
+    }
+
     public static class Program
     {
 

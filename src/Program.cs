@@ -11,19 +11,6 @@ using System.Security.Cryptography;
 namespace Karlosum
 {
 
-    public static class Extensions
-    {
-        public static string ToHexadecimalString(this byte[] bytes)
-        {
-            var sb = new StringBuilder();
-            foreach (var b in bytes)
-            {
-                sb.Append(b.ToString("x2"));
-            }
-            return sb.ToString();
-        }
-    }
-
     public static class Program
     {
 
@@ -46,17 +33,24 @@ namespace Karlosum
                     Argument = new Argument<string>("output")
                 }
             );
-            rc.Handler = CommandHandler.Create<FileInfo, string>(SumIt);
+            rc.AddOption(
+                new Option(new string[] { "--hash", "-h" }, description: "Hash")
+                {
+                    Required = false,
+                    Argument = new Argument<EHashType>("hash")
+                }
+            );
+            rc.Handler = CommandHandler.Create<FileInfo, string, EHashType>(SumIt);
             return await rc.InvokeAsync(args);
         }
 
-        public static void SumIt(FileInfo fileinfo, string output = "nothing")
+        public static void SumIt(FileInfo fileinfo, string output = "nothing", EHashType hashes = EHashType.MD5)
         {
 
 
             var hash = CalculateHash(File.ReadAllBytes(fileinfo.FullName));
 
-            System.Console.WriteLine($"{hash} o: {output}");
+            System.Console.WriteLine($"{hashes} o: {output}");
         }
 
         static string CalculateHash(byte[] bytes, HashAlgorithm? algorithm = null)

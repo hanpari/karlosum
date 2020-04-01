@@ -17,52 +17,31 @@ namespace Karlosum
         public static async Task<int> Main(params string[] args)
         {
             RootCommand rc = new RootCommand(
-                description: "Popis"
+                description: "Basic functionality"
             );
-            rc.AddArgument(
-                argument: new Argument<FileInfo>("fileinfo")
-                {
-                    Description = "Name of file",
-                }
-                );
+
 
             rc.AddOption(
                 new Option(new string[] { "--output", "-o" }, description: "Output directory")
                 {
-                    Required = false,
+                    Required = true,
                     Argument = new Argument<string>("output")
                 }
             );
             rc.AddOption(
-                new Option(new string[] { "--hash", "-h" }, description: "Hash")
+                new Option(new string[] { "--input", "-i" }, description: "Input directory")
                 {
-                    Required = false,
-                    Argument = new Argument<EHashType>("hash")
+                    Required = true,
+                    Argument = new Argument<string>("input")
                 }
             );
-            rc.Handler = CommandHandler.Create<FileInfo, string, EHashType>(SumIt);
+
+
+            rc.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo>(KarlosumCLI.Run);
+
             return await rc.InvokeAsync(args);
         }
 
-        public static void SumIt(FileInfo fileinfo, string output = "nothing", EHashType hashes = EHashType.MD5)
-        {
-
-
-            var hash = CalculateHash(File.ReadAllBytes(fileinfo.FullName));
-
-            System.Console.WriteLine($"{hashes} o: {output}");
-        }
-
-        static string CalculateHash(byte[] bytes, HashAlgorithm? algorithm = null)
-        {
-            var a = algorithm ?? MD5.Create();
-            var sb = new StringBuilder();
-            foreach (var byte_in_hash in a.ComputeHash(bytes))
-            {
-                sb.Append(byte_in_hash.ToString("x2"));
-            }
-            return sb.ToString();
-        }
 
     }
 }

@@ -5,7 +5,7 @@ namespace Karlosum
 {
     class Converter
     {
-        Converter(EHashType eHashType = EHashType.MD5)
+        public Converter(EHashType eHashType = EHashType.MD5)
         {
             HashAlgor = eHashType switch
             {

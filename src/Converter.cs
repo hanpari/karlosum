@@ -20,7 +20,7 @@ namespace Karlosum
 
         HashAlgorithm HashAlgor { get; }
 
-        public string CreateHashToken(byte[] buffer) => HashAlgor.ComputeHash(buffer).ToHexadecimalString();
+        public string CreateHashToken(byte[] filebuffer) => HashAlgor.ComputeHash(filebuffer).ToHexadecimalString();
 
 
     }

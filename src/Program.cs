@@ -1,4 +1,5 @@
-﻿using System.CommandLine;
+﻿using System;
+using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
 using System.Reflection;
@@ -17,16 +18,7 @@ namespace Karlosum
         public static async Task<int> Main(params string[] args)
         {
             RootCommand rc = new RootCommand(
-                description: "Basic functionality"
-            );
-
-
-            rc.AddOption(
-                new Option(new string[] { "--output", "-o" }, description: "Output directory")
-                {
-                    Required = true,
-                    Argument = new Argument<string>("output")
-                }
+                description: "Write hashes for files."
             );
             rc.AddOption(
                 new Option(new string[] { "--input", "-i" }, description: "Input directory")
@@ -36,8 +28,39 @@ namespace Karlosum
                 }
             );
 
+            rc.AddOption(
+                new Option(new string[] { "--output", "-o" }, description: "Output directory")
+                {
+                    Required = true,
+                    Argument = new Argument<string>("output")
+                }
+            );
 
-            rc.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo>(KarlosumCLI.Run);
+            rc.AddOption(
+                new Option(new string[] { "--hashtype", "-t" }, description: "Hash type to use? Default MD5.")
+                {
+                    Required = false,
+                    Argument = new Argument<EHashType>("eHashType"),
+                }
+            );
+            rc.AddOption(
+                new Option(new string[] { "--recursive", "-r" }, description: "Search recursively? Default true. \n")
+                {
+                    Required = false,
+                    Argument = new Argument<bool>("isRecursive"),
+
+                }
+            );
+            rc.AddOption(
+                new Option(new string[] { "--pattern", "-p" }, description: "File pattern to search? Default all. \n")
+                {
+                    Required = false,
+                    Argument = new Argument<string>("patternOfFiles")
+                }
+            );
+
+
+            rc.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo, EHashType, bool, string>(KarlosumCLI.Run);
 
             return await rc.InvokeAsync(args);
         }

@@ -6,6 +6,6 @@ namespace Karlosum
         MD5,
         SHA256,
         SHA1,
-        SHA512
+        SHA512,
     }
 }

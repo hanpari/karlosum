@@ -14,7 +14,7 @@ namespace Karlosum
                 EHashType.SHA256 => SHA256.Create(),
                 EHashType.SHA512 => SHA512.Create(),
 
-                _ => throw new System.Exception(string.Format("Not implemented hash {0}!", eHashType))
+                _ => throw new System.ArgumentException($"Not implemented hash {eHashType}!")
             };
         }
 

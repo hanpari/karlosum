@@ -21,6 +21,11 @@ namespace Karlosum
                 Error.WriteLine($"Directory {input.FullName} doesnt exist! Exiting...");
                 return 1;
             }
+            if (!output.Exists)
+            {
+                Error.WriteLine($"Directory {output.FullName} doesnt exist! Exiting...");
+                return 1;
+            }
             if (input.Equals(output))
             {
                 Error.WriteLine("Input directory cannot be the same as output directory! Exiting...");
@@ -44,7 +49,6 @@ namespace Karlosum
                                                               searchPattern: patternOfFiles,
                                                               enumerationOptions: options))
                 {
-                    Console.WriteLine(file);
                     tw.WriteLine(
                         con.CreateHashToken(File.ReadAllBytes(file))
                 );

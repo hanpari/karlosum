@@ -17,10 +17,10 @@ namespace Karlosum
 
         public static async Task<int> Main(params string[] args)
         {
-            RootCommand rc = new RootCommand(
+            RootCommand rootCommand = new RootCommand(
                 description: "Write hashes for files."
             );
-            rc.AddOption(
+            rootCommand.AddOption(
                 new Option(new string[] { "--input", "-i" }, description: "Input directory")
                 {
                     Required = true,
@@ -28,7 +28,7 @@ namespace Karlosum
                 }
             );
 
-            rc.AddOption(
+            rootCommand.AddOption(
                 new Option(new string[] { "--output", "-o" }, description: "Output directory")
                 {
                     Required = true,
@@ -36,14 +36,14 @@ namespace Karlosum
                 }
             );
 
-            rc.AddOption(
+            rootCommand.AddOption(
                 new Option(new string[] { "--hashtype", "-t" }, description: "Hash type to use? Default MD5.")
                 {
                     Required = false,
                     Argument = new Argument<EHashType>("eHashType"),
                 }
             );
-            rc.AddOption(
+            rootCommand.AddOption(
                 new Option(new string[] { "--recursive", "-r" }, description: "Search recursively? Default true. \n")
                 {
                     Required = false,
@@ -51,7 +51,7 @@ namespace Karlosum
 
                 }
             );
-            rc.AddOption(
+            rootCommand.AddOption(
                 new Option(new string[] { "--pattern", "-p" }, description: "File pattern to search? Default all. \n")
                 {
                     Required = false,
@@ -59,10 +59,16 @@ namespace Karlosum
                 }
             );
 
+            var downloadCommand = new Command("download", "Download definition");
+            downloadCommand.AddArgument(
+                new Argument<Uri>("definitionUri")
+            );
+            rootCommand.AddCommand(downloadCommand
+            );
+            downloadCommand.Handler = CommandHandler.Create<Uri>(KarlosumCLI.DownloadAsync);
+            rootCommand.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo, EHashType, bool, string>(KarlosumCLI.Run);
 
-            rc.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo, EHashType, bool, string>(KarlosumCLI.Run);
-
-            return await rc.InvokeAsync(args);
+            return await rootCommand.InvokeAsync(args);
         }
 
 

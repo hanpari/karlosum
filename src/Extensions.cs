@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
@@ -22,5 +23,7 @@ namespace Karlosum
             return Directory.EnumerateFiles(directory.FullName, pattern, options);
         }
 
+        public static void LogError(string message, Action<string>? log = null) =>
+            (log ?? Console.Error.WriteLine)(message);
     }
 }

@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System;
 using System.Text;
 using System.IO;
@@ -8,6 +9,8 @@ namespace Karlosum
 {
     public static class Extensions
     {
+        private const string DEFINITION_FILE = "definition.txt";
+
         public static string ToHexadecimalString(this byte[] bytes)
         {
             var sb = new StringBuilder();
@@ -25,5 +28,8 @@ namespace Karlosum
 
         public static void LogError(string message, Action<string>? log = null) =>
             (log ?? Console.Error.WriteLine)(message);
+
+        public static HashSet<string>? RetrieveDefinitionSet(string filename = DEFINITION_FILE) => File.Exists(filename) ? new HashSet<string>(File.ReadAllLines(filename)) : null;
+
     }
 }

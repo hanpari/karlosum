@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Linq.Expressions;
 using System.Net.Http;
 using System.ComponentModel;
@@ -20,7 +22,7 @@ namespace Karlosum
                               DirectoryInfo output,
                               EHashType eHashType = EHashType.MD5,
                               bool isRecursive = true,
-                              string patternOfFiles = "*")
+                              Regex? patternOfFiles = null)
         {
 
 
@@ -44,7 +46,15 @@ namespace Karlosum
                     throw new ArgumentException($"Output file: {outputFile} already exists!");
 
                 using var tw = new StreamWriter(outputFile);
-                foreach (var file in Directory.EnumerateFiles(input.FullName, searchPattern: patternOfFiles, enumerationOptions: options))
+
+                var files = Directory.EnumerateFiles(input.FullName, searchPattern: null, enumerationOptions: options);
+
+                if (patternOfFiles != null)
+                {
+                    files = files.Where(x => patternOfFiles.IsMatch(x));
+                }
+
+                foreach (string file in files)
                 {
                     tw.WriteLine(
                         con.CreateHashToken(File.ReadAllBytes(file))

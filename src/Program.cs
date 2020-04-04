@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Text.RegularExpressions;
+using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
@@ -55,7 +56,7 @@ namespace Karlosum
                 new Option(new string[] { "--pattern", "-p" }, description: "File pattern to search? Default all. \n")
                 {
                     Required = false,
-                    Argument = new Argument<string>("patternOfFiles")
+                    Argument = new Argument<Regex>("patternOfFiles")
                 }
             );
 
@@ -66,7 +67,7 @@ namespace Karlosum
             rootCommand.AddCommand(downloadCommand
             );
             downloadCommand.Handler = CommandHandler.Create<Uri>(KarlosumCLI.DownloadAsync);
-            rootCommand.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo, EHashType, bool, string>(KarlosumCLI.Run);
+            rootCommand.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo, EHashType, bool, Regex>(KarlosumCLI.Run);
 
             return await rootCommand.InvokeAsync(args);
         }

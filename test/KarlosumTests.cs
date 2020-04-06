@@ -32,9 +32,6 @@ namespace test
                 File.Delete(outputFile);
             }
 
-
-
-
         }
 
 
@@ -69,6 +66,16 @@ namespace test
         [Fact]
         public void TestCLIFunctionality()
         {
+            int result = KarlosumCLI.Run(
+                input: new DirectoryInfo(inputDir),
+                output: new DirectoryInfo(outputDir),
+                eHashType: EHashType.MD5,
+                isRecursive: true,
+                patternOfFiles: null
+            );
+            Assert.Equal(0, result);
+            Assert.True(File.Exists(outputFile));
+            Assert.Equal(3, File.ReadAllLines(outputFile).Length);
         }
 
     }

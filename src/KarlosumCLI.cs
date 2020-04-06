@@ -47,7 +47,7 @@ namespace Karlosum
 
                 using var tw = new StreamWriter(outputFile);
 
-                var files = Directory.EnumerateFiles(input.FullName, searchPattern: null, enumerationOptions: options);
+                var files = Directory.EnumerateFiles(input.FullName, "*", enumerationOptions: options);
 
                 if (patternOfFiles != null)
                 {

@@ -1,3 +1,4 @@
+using System.Net;
 using System.IO;
 using System.Reflection;
 using System;
@@ -9,13 +10,31 @@ namespace test
 {
     public class KarlosumUnitTest
     {
-        private string root;
-        private string testDir;
+        private readonly string root;
+        private readonly string testDir;
+        private readonly string outputDir;
+        private readonly string inputDir;
+
+        private readonly string outputFile;
 
         public KarlosumUnitTest()
         {
             root = "../../../";
             testDir = Path.Join(root, "testdir");
+            outputDir = Path.Join(testDir, "output");
+            inputDir = Path.Join(testDir, "input");
+            outputFile = Path.Join(outputDir, Extensions.GenerateOutputFileName());
+
+            // We have to delete the existing result file
+            // or we'll get an exception.
+            if (File.Exists(outputFile))
+            {
+                File.Delete(outputFile);
+            }
+
+
+
+
         }
 
 
@@ -34,7 +53,7 @@ namespace test
         [InlineData("recursive/deeper_file.dat")]
         public void TestFilesExist(string filename)
         {
-            string path = Path.Join(testDir, "files", filename);
+            string path = Path.Join(inputDir, filename);
             Assert.True(File.Exists(path));
         }
 
@@ -45,6 +64,11 @@ namespace test
                 $"{Environment.MachineName}.txt",
                 Extensions.GenerateOutputFileName()
             );
+        }
+
+        [Fact]
+        public void TestCLIFunctionality()
+        {
         }
 
     }

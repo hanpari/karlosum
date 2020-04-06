@@ -40,7 +40,7 @@ namespace Karlosum
 
                 var con = new HashTokenCreator(eHashType);
                 var options = new EnumerationOptions() { RecurseSubdirectories = isRecursive };
-                string outputFile = Path.Join(output.FullName, $"{Environment.MachineName}.txt");
+                string outputFile = Path.Join(output.FullName, Extensions.GenerateOutputFileName());
 
                 if (File.Exists(outputFile))
                     throw new ArgumentException($"Output file: {outputFile} already exists!");

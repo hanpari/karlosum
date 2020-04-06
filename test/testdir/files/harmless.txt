@@ -1,0 +1,1 @@
+This is a harmless txt file, or at least, this is a file with txt extension. In standard cases, this one will be skipped.

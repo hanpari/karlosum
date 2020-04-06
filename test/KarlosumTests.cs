@@ -7,8 +7,16 @@ using static System.Environment;
 
 namespace test
 {
-    public class UnitTest1
+    public class KarlosumUnitTest
     {
+        private string root;
+        private string testDir;
+
+        public KarlosumUnitTest()
+        {
+            root = "../../../";
+            testDir = Path.Join(root, "testdir");
+        }
 
 
 
@@ -26,7 +34,7 @@ namespace test
         [InlineData("recursive/deeper_file.dat")]
         public void TestFilesExist(string filename)
         {
-            string path = "../../../testdir/files/" + filename;
+            string path = Path.Join(testDir, "files", filename);
             Assert.True(File.Exists(path));
         }
 

@@ -31,5 +31,6 @@ namespace Karlosum
 
         public static HashSet<string>? RetrieveDefinitionSet(string filename = DEFINITION_FILE) => File.Exists(filename) ? new HashSet<string>(File.ReadAllLines(filename)) : null;
 
+        public static string GenerateOutputFileName(string? basename = null) => String.Format("{0}.txt", (basename ?? Environment.MachineName));
     }
 }

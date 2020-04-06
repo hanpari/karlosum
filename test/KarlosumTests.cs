@@ -38,5 +38,14 @@ namespace test
             Assert.True(File.Exists(path));
         }
 
+        [Fact]
+        public void TestGeneratedName()
+        {
+            Assert.Equal(
+                $"{Environment.MachineName}.txt",
+                Extensions.GenerateOutputFileName()
+            );
+        }
+
     }
 }

@@ -30,10 +30,10 @@ namespace Karlosum
             {
 
                 if (!input.Exists)
-                    throw new ArgumentException($"Directory {input.FullName} doesn't exist!");
+                    throw new ArgumentException(input.DirectoryDoesNotExist());
 
                 if (!output.Exists)
-                    throw new ArgumentException($"Directory {output.FullName} doesnt exist!");
+                    throw new ArgumentException(output.DirectoryDoesNotExist());
 
                 if (input.Equals(output))
                     throw new ArgumentException("Input directory cannot be the same as output directory!");
@@ -41,9 +41,6 @@ namespace Karlosum
                 var con = new HashTokenCreator(eHashType);
                 var options = new EnumerationOptions() { RecurseSubdirectories = isRecursive };
                 string outputFile = Path.Join(output.FullName, Extensions.GenerateOutputFileName());
-
-                if (File.Exists(outputFile))
-                    throw new ArgumentException($"Output file: {outputFile} already exists!");
 
                 using var tw = new StreamWriter(outputFile);
 
@@ -68,16 +65,6 @@ namespace Karlosum
                 return 1;
             }
             return 0;
-        }
-
-        public static async Task DownloadAsync(Uri definitionUri)
-        {
-            var client = new HttpClient();
-            var bytes = await client.GetByteArrayAsync(definitionUri);
-            File.WriteAllBytes(
-                "definition.txt",
-                bytes
-            );
         }
     }
 }

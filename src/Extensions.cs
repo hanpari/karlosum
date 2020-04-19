@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System;
 using System.Text;
@@ -32,5 +33,10 @@ namespace Karlosum
         public static HashSet<string>? RetrieveDefinitionSet(string filename = DEFINITION_FILE) => File.Exists(filename) ? new HashSet<string>(File.ReadAllLines(filename)) : null;
 
         public static string GenerateOutputFileName(string? basename = null) => String.Format("{0}.txt", (basename ?? Environment.MachineName));
+        public static string DirectoryDoesNotExist(this DirectoryInfo dinfo) => $"Directory {dinfo} doesn't exist!";
     }
+
+
+    public delegate System.Security.Cryptography.HashAlgorithm ObtainHashAlgorithm();
+
 }

@@ -68,13 +68,8 @@ namespace Karlosum
                 }
             );
 
-            var downloadCommand = new Command("download", "Download definition");
-            downloadCommand.AddArgument(
-                new Argument<Uri>("definitionUri")
-            );
-            rootCommand.AddCommand(downloadCommand
-            );
-            downloadCommand.Handler = CommandHandler.Create<Uri>(KarlosumCLI.DownloadAsync);
+
+
             rootCommand.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo, EHashType, bool, Regex>(KarlosumCLI.Run);
 
             return await rootCommand.InvokeAsync(args);

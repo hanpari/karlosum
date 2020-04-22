@@ -12,6 +12,11 @@ namespace Karlosum
     {
         private const string DEFINITION_FILE = "definition.txt";
 
+        /// <summary>
+        /// From any byte array creates its hexadecimal presentation as a string
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns>Hexadecimal presentation</returns>
         public static string ToHexadecimalString(this byte[] bytes)
         {
             var sb = new StringBuilder();
@@ -27,6 +32,11 @@ namespace Karlosum
             return Directory.EnumerateFiles(directory.FullName, pattern, options);
         }
 
+        /// <summary>
+        /// Log message to given logger
+        /// </summary>
+        /// <param name="message">The error message</param>
+        /// <param name="log">Delegate to custom logger.</param>
         public static void LogError(string message, Action<string>? log = null) =>
             (log ?? Console.Error.WriteLine)(message);
 
@@ -36,7 +46,5 @@ namespace Karlosum
         public static string DirectoryDoesNotExist(this DirectoryInfo dinfo) => $"Directory {dinfo} doesn't exist!";
     }
 
-
-    public delegate System.Security.Cryptography.HashAlgorithm ObtainHashAlgorithm();
 
 }

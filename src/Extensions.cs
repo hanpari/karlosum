@@ -8,6 +8,11 @@ using System.Collections.Generic;
 #nullable enable
 namespace Karlosum
 {
+    public struct Settings
+    {
+        public Uri definitionUri;
+        public EHashType hashType;
+    }
     public static class Extensions
     {
         private const string DEFINITION_FILE = "definition.txt";

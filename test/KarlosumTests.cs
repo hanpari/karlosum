@@ -6,6 +6,7 @@ using System;
 using Xunit;
 using Karlosum;
 using static System.Environment;
+using Newtonsoft.Json;
 
 namespace test
 {
@@ -88,6 +89,18 @@ namespace test
                 "07b102f06e4898bdcff401c6ba2e6eb5",
                 hash);
         }
+
+        [Fact]
+        public void TestDefaultJsonSettingsExistAndWork()
+        {
+            string settingsFile = "settings.json";
+            Assert.True(File.Exists(settingsFile));
+            using var reader = new StreamReader(settingsFile);
+            var setting = JsonConvert.DeserializeObject<Settings>(reader.ReadToEnd());
+            Assert.NotNull(setting.definitionUri);
+            Assert.Equal(EHashType.MD5, setting.hashType);
+        }
+
 
     }
 }

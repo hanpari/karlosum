@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 #nullable enable
 namespace Karlosum
 {
-    class HashTokenCreator
+    public class HashTokenCreator
     {
         public HashTokenCreator(EHashType eHashType = EHashType.MD5)
         {

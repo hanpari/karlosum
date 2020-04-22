@@ -1,3 +1,4 @@
+using System.Text;
 using System.Net;
 using System.IO;
 using System.Reflection;
@@ -76,6 +77,16 @@ namespace test
             Assert.Equal(0, result);
             Assert.True(File.Exists(outputFile));
             Assert.Equal(3, File.ReadAllLines(outputFile).Length);
+        }
+
+        [Fact]
+        public void TestMD5Hash()
+        {
+            var hash = new HashTokenCreator(EHashType.MD5).ComputeHash(Encoding.ASCII.GetBytes("this is simple test")).ToHexadecimalString();
+
+            Assert.Equal(
+                "07b102f06e4898bdcff401c6ba2e6eb5",
+                hash);
         }
 
     }

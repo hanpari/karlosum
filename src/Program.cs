@@ -1,15 +1,9 @@
-﻿using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text.RegularExpressions;
-using System;
+﻿using System.Text.RegularExpressions;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Text;
-using System.Security.Cryptography;
 
 #nullable enable
 namespace Karlosum

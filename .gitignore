@@ -39,3 +39,4 @@ msbuild.wrn
 # build
 app/
 test/testdir/output/PAVLOVO.txt
+packages-microsoft-prod.deb

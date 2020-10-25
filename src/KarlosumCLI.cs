@@ -1,15 +1,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Linq.Expressions;
-using System.Net.Http;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System;
-using System.CommandLine;
-using System.Net;
-using System.Threading.Tasks;
-using static System.Console;
 using static Karlosum.Extensions;
 
 
